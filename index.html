@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h3>Yolcu Giriş:</h3>
+    <h1 id="yolcu">0</h1>
+    <div>
+        <button onclick="yolcuEkle()">Yolcu Ekle</button>
+        <button onclick="yolcuKaydet()">Kaydet</button>
+
+    </div>
+    <p id="KaydedilenYolcu"></p>
+    <div style="display:inline-flex">
+        <h1>Toplam Yolcu : </h1>
+        <h1 id="toplamYolcu">
+            </h2>
+    </div>
+    <script>
+        const yolcuElement = document.querySelector("#yolcu");
+        const KaydedilenYolcuElementi = document.querySelector("#KaydedilenYolcu");
+        const toplamYolcuElement = document.querySelector("#toplamYolcu");
+
+        const yolcuArr = [];
+
+        let localInfo = JSON.parse(localStorage.getItem("yolcuSayisi"));
+
+        localInfo.forEach((i) => yolcuArr.push(i));
+        toplamYolcuGoster();
+
+        yolcuElement.textContent = 0;
+
+        function yolcuEkle() {
+            yolcuElement.textContent = parseInt(yolcuElement.textContent) + 1;
+        }
+        function yolcuKaydet() {
+            yolcuArr.push(yolcuElement.textContent);
+            localStorage.setItem("yolcuSayisi", JSON.stringify(yolcuArr));
+            yolcuElement.textContent = "0";
+
+            toplamYolcuGoster();
+        }
+
+        function toplamYolcuGoster() {
+            let toplam = 0;
+            yolcuArr.forEach((item) => { toplam += parseInt(item) });
+            toplamYolcuElement.innerHTML = toplam;
+
+            KaydedilenYolcuElementi.innerHTML = '';
+            yolcuArr.forEach((x) => {
+                KaydedilenYolcuElementi.append(`${x} - `)
+            });
+
+
+        }
+
+
+    </script>
+</body>
+
+</html>
